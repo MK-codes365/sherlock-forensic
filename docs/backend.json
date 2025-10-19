@@ -1,0 +1,316 @@
+
+{
+  "entities": {
+    "UFDR": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "UFDR",
+      "type": "object",
+      "description": "Represents a Universal Forensic Disk Image Reader (UFDR) file and its associated metadata.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the UFDR file."
+        },
+        "fileName": {
+          "type": "string",
+          "description": "Name of the UFDR file."
+        },
+        "fileSize": {
+          "type": "number",
+          "description": "Size of the UFDR file in bytes."
+        },
+        "uploadDate": {
+          "type": "string",
+          "description": "Date and time when the UFDR file was uploaded.",
+          "format": "date-time"
+        },
+        "sourceTool": {
+          "type": "string",
+          "description": "Forensic tool that generated the UFDR file."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the UFDR file."
+        }
+      },
+      "required": [
+        "id",
+        "fileName",
+        "fileSize",
+        "uploadDate",
+        "sourceTool"
+      ]
+    },
+    "IndicatorOfInterest": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "IndicatorOfInterest",
+      "type": "object",
+      "description": "Represents an Indicator of Interest (IOI) extracted from a UFDR file.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Indicator of Interest."
+        },
+        "ufdrId": {
+          "type": "string",
+          "description": "Reference to the UFDR from which this IOI was extracted. (Relationship: UFDR 1:N IndicatorOfInterest)"
+        },
+        "ioiType": {
+          "type": "string",
+          "description": "Type of Indicator of Interest (e.g., email address, IP address, phone number)."
+        },
+        "ioiValue": {
+          "type": "string",
+          "description": "Value of the Indicator of Interest."
+        },
+        "context": {
+          "type": "string",
+          "description": "Context in which the Indicator of Interest was found within the UFDR."
+        },
+        "relevanceScore": {
+          "type": "number",
+          "description": "Relevance score of the Indicator of Interest to the query."
+        }
+      },
+      "required": [
+        "id",
+        "ufdrId",
+        "ioiType",
+        "ioiValue",
+        "context"
+      ]
+    },
+    "Query": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Query",
+      "type": "object",
+      "description": "Represents a natural language query submitted by the user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the query."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the user who submitted the query. (Relationship: User 1:N Query)"
+        },
+        "queryText": {
+          "type": "string",
+          "description": "Text of the natural language query."
+        },
+        "submissionDate": {
+          "type": "string",
+          "description": "Date and time when the query was submitted.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "queryText",
+        "submissionDate"
+      ]
+    },
+    "QueryResult": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "QueryResult",
+      "type": "object",
+      "description": "Represents the results of a query, linking the query to the relevant indicators of interest.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the query result."
+        },
+        "queryId": {
+          "type": "string",
+          "description": "Reference to the query that generated these results. (Relationship: Query 1:N QueryResult)"
+        },
+        "ioiIds": {
+          "type": "array",
+          "description": "References to the Indicators of Interest that are relevant to the query. (Relationship: QueryResult N:N IndicatorOfInterest)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "report": {
+          "type": "string",
+          "description": "Generated report summarizing the query results."
+        },
+        "generationDate": {
+          "type": "string",
+          "description": "Date and time when the query results were generated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "queryId",
+        "ioiIds",
+        "report",
+        "generationDate"
+      ]
+    },
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the Sherlock Forensic application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user."
+        },
+        "username": {
+          "type": "string",
+          "description": "Username of the user."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the user.",
+          "format": "email"
+        },
+        "firstName": {
+          "type": "string",
+          "description": "First name of the user."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Last name of the user."
+        }
+      },
+      "required": [
+        "id",
+        "username",
+        "email",
+        "firstName",
+        "lastName"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous",
+      "google.com",
+      "facebook.com",
+      "twitter.com"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profile information. Path-based ownership ensures only the user can access their own profile.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/queries/{queryId}",
+        "definition": {
+          "entityName": "Query",
+          "schema": {
+            "$ref": "#/backend/entities/Query"
+          },
+          "description": "Stores queries submitted by a user. Includes the denormalized 'userId' for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "queryId",
+              "description": "The unique identifier of the query."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/ufdrs/{ufdrId}",
+        "definition": {
+          "entityName": "UFDR",
+          "schema": {
+            "$ref": "#/backend/entities/UFDR"
+          },
+          "description": "Stores UFDR files associated with a user. Path-based ownership ensures only the user can access their own UFDR files.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "ufdrId",
+              "description": "The unique identifier of the UFDR file."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/ufdrs/{ufdrId}/indicators/{indicatorId}",
+        "definition": {
+          "entityName": "IndicatorOfInterest",
+          "schema": {
+            "$ref": "#/backend/entities/IndicatorOfInterest"
+          },
+          "description": "Stores Indicators of Interest (IOIs) extracted from a UFDR file.  Path-based ownership ensures only the user can access IOIs extracted from their own UFDR files.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "ufdrId",
+              "description": "The unique identifier of the UFDR file."
+            },
+            {
+              "name": "indicatorId",
+              "description": "The unique identifier of the Indicator of Interest."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/query_results/{queryResultId}",
+        "definition": {
+          "entityName": "QueryResult",
+          "schema": {
+            "$ref": "#/backend/entities/QueryResult"
+          },
+          "description": "Stores query results accessible only by admins.",
+          "params": [
+            {
+              "name": "queryResultId",
+              "description": "The unique identifier of the query result."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/roles_admin/{userId}",
+        "definition": {
+          "entityName": "admin",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Indicates admin role. Existence of document grants admin privileges.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to ensure authorization independence, clarity, and scalability, aligning with the specified principles. Each collection is structurally segregated to maintain a homogeneous security posture. Authorization independence is achieved through denormalization. Specifically, the `Query` documents store the `userId`, eliminating the need for `get()` calls to the `/users` collection.  User-owned data is stored in hierarchical paths. Global roles (admins) are managed through document existence in the `/roles_admin/{uid}` collection. The design supports the QAPs requirement. Since private data is stored under `/users/{userId}`, listing UFDR files is secure and efficient. Collections are structurally segregated so that listing all UFDRs requires admin rights. This segregation ensures that general users can't list other users' UFDR files, satisfying QAPs by preventing unauthorized data access. Explicit state modeling can be added to the UFDR by including a `status` field (e.g., 'UPLOADED', 'PROCESSING', 'COMPLETED')."
+  }
+}

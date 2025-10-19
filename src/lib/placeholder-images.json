@@ -1,0 +1,76 @@
+{
+  "placeholderImages": [
+    {
+      "id": "user-avatar",
+      "description": "User avatar for the header menu",
+      "imageUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxwZXJzb24lMjBmYWNlfGVufDB8fHx8MTc2MDg1NDQyOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person face"
+    },
+    {
+      "id": "login-background",
+      "description": "Background image for the login page",
+      "imageUrl": "/tank.jpg",
+      "imageHint": "digital circuit board"
+    },
+    {
+      "id": "team-member-1",
+      "description": "Photo of team member Shreya Jain",
+      "imageUrl": "/Team/shreya.jpeg",
+      "imageHint": "person face"
+    },
+    {
+      "id": "team-member-2",
+      "description": "Photo of team member Mukut Kumar",
+      "imageUrl": "/Team/mukut.jpeg",
+      "imageHint": "person face"
+    },
+    {
+      "id": "team-member-3",
+      "description": "Photo of team member Vimal Singh",
+      "imageUrl": "/Team/vimal.jpeg",
+      "imageHint": "person face"
+    },
+    {
+      "id": "team-member-4",
+      "description": "Photo of team member Madhu Maddheshiya",
+      "imageUrl": "/Team/madhu.jpeg",
+      "imageHint": "person face"
+    },
+    {
+      "id": "team-member-5",
+      "description": "Photo of team member Ashutosh Singh",
+      "imageUrl": "/Team/ashutosh.jpeg",
+      "imageHint": "person face"
+    },
+    {
+      "id": "team-member-6",
+      "description": "Photo of team member Ayush Singh",
+      "imageUrl": "/Team/ayush.jpeg",
+      "imageHint": "person face"
+    },
+    {
+      "id": "screenshot-ufdr-upload",
+      "description": "Screenshot of the UFDR Upload Interface",
+      "imageUrl": "/ufdr%20interface.png",
+      "imageHint": "dashboard ui"
+    },
+    {
+      "id": "screenshot-ai-query",
+      "description": "Screenshot of the AI Query Chat UI",
+      "imageUrl": "/ai%20query.png",
+      "imageHint": "chat interface"
+    },
+    {
+      "id": "screenshot-reports",
+      "description": "Screenshot of the reports page",
+      "imageUrl": "/reports.png",
+      "imageHint": "reports ui"
+    },
+    {
+      "id": "screenshot-reports-2",
+      "description": "Screenshot of the reports page (alternate view)",
+      "imageUrl": "/reports2.png",
+      "imageHint": "reports ui"
+    }
+  ]
+}
