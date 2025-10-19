@@ -77,12 +77,4 @@ npm run dev
 
 The application will be available at [http://localhost:9002](http://localhost:9002).
 
-## Firebase Backend
 
-The application is configured to connect to a Firebase project for authentication and database services.
-
-- **Firebase Project ID**: `studio-3204401308-c4dc7`
-- **Authentication**: Email/Password and social providers are enabled. User data is managed through Firebase Authentication.
-- **Firestore**: The database for storing case data, evidence, and user information. Security rules are defined in `firestore.rules` to ensure data privacy and integrity.
-
-You can access and manage your backend services by visiting the [Firebase Console](https://console.firebase.google.com/project/studio-3204401308-c4dc7/).
