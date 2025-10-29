@@ -28,7 +28,6 @@ Sherlock Forensic is an advanced, AI-powered forensic analysis platform designed
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **UI Components**: [ShadCN UI](https://ui.shadcn.com/)
 - **AI/Generative**: [Google's Genkit](https://firebase.google.com/docs/genkit)
-- **Backend & Auth**: [Firebase](https://firebase.google.com/) (Authentication, Firestore)
 - **Charts & Visuals**: [Recharts](https://recharts.org/)
 
 ## Getting Started
